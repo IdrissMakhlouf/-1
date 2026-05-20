@@ -1,0 +1,117 @@
+-- ===============================
+-- قاعدة بيانات: heritage_platform
+-- ===============================
+
+-- 1️⃣ جدول المستخدمين
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'visitor') DEFAULT 'visitor',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 2️⃣ جدول الولايات
+CREATE TABLE states (
+    state_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    description TEXT
+);
+
+-- 3️⃣ جدول المواقع الأثرية
+CREATE TABLE heritage_sites (
+    site_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_id INT NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+    video_url VARCHAR(255),
+    image_url VARCHAR(255),
+    story TEXT,
+    FOREIGN KEY (state_id) REFERENCES states(state_id) ON DELETE CASCADE
+);
+
+-- 4️⃣ جدول الثقافة المحلية (طبيعة، ملابس تقليدية، عادات)
+CREATE TABLE local_culture (
+    culture_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_id INT NOT NULL,
+    category ENUM('nature', 'traditional_clothes', 'traditions') NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    description TEXT,
+    image_url VARCHAR(255),
+    FOREIGN KEY (state_id) REFERENCES states(state_id) ON DELETE CASCADE
+);
+
+-- 5️⃣ جدول الدروس التعليمية
+CREATE TABLE lessons (
+    lesson_id INT AUTO_INCREMENT PRIMARY KEY,
+    level ENUM('primary', 'middle', 'secondary') NOT NULL,
+    subject ENUM('history', 'geography', 'civic_education') NOT NULL,
+    title VARCHAR(150) NOT NULL,
+    summary TEXT,
+    video_url VARCHAR(255),
+    mindmap_url VARCHAR(255),
+    sources TEXT
+);
+
+-- 6️⃣ جدول الأرشيف التاريخي
+CREATE TABLE historical_archives (
+    archive_id INT AUTO_INCREMENT PRIMARY KEY,
+    period_name VARCHAR(150) NOT NULL,
+    start_year INT,
+    end_year INT,
+    description TEXT,
+    sources TEXT
+);
+
+-- 7️⃣ جدول الفنادق
+CREATE TABLE hotels (
+    hotel_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_id INT NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+    address VARCHAR(255),
+    phone VARCHAR(50),
+    rating DECIMAL(2,1),
+    image_url VARCHAR(255),
+    FOREIGN KEY (state_id) REFERENCES states(state_id) ON DELETE CASCADE
+);
+
+-- 8️⃣ جدول المطاعم التقليدية
+CREATE TABLE restaurants (
+    restaurant_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_id INT NOT NULL,
+    name VARCHAR(150) NOT NULL,
+    description TEXT,
+    address VARCHAR(255),
+    phone VARCHAR(50),
+    cuisine_type VARCHAR(100),
+    rating DECIMAL(2,1),
+    image_url VARCHAR(255),
+    FOREIGN KEY (state_id) REFERENCES states(state_id) ON DELETE CASCADE
+);
+
+-- 9️⃣ جدول الرحلات الذكية (اقتراح AI)
+CREATE TABLE smart_trips (
+    trip_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    state_id INT NOT NULL,
+    trip_name VARCHAR(150) NOT NULL,
+    sites TEXT,        -- قائمة بالمواقع الأثرية مختصرة
+    hotels TEXT,       -- قائمة الفنادق المقترحة
+    restaurants TEXT,  -- قائمة المطاعم المقترحة
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (state_id) REFERENCES states(state_id)
+);
+
+
+CREATE TABLE interactive_maps (
+    map_id INT AUTO_INCREMENT PRIMARY KEY,
+    state_id INT NOT NULL,
+    map_title VARCHAR(150) NOT NULL,
+    map_image_url VARCHAR(255),      -- صورة للخريطة (اختياري للعرض العام)
+    map_data JSON,                   -- بيانات المواقع: المواقع الأثرية، الفنادق، المطاعم مع الإحداثيات
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (state_id) REFERENCES states(state_id) ON DELETE CASCADE
+);

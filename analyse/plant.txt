@@ -1,0 +1,31 @@
+heritage_platform/
+│
+├── index.php               # الصفحة الرئيسية (خريطة الجزائر + الأقسام الرئيسية)
+├── config/db.php              # إعدادات الاتصال بقاعدة البيانات
+├── register.php            # فتح حساب 
+├── logout.php              # 
+│
+├── assets/                 # ملفات الموارد
+│   ├── images/             # الصور (معالم، ثقافة، فنادق، مطاعم)
+│   └── videos/             # الفيديوهات التعليمية أو الترفيهية
+│
+│
+├── users_pages/   
+│   ├── menu.php      # صفحة الولاية مع المواقع، الفنادق، المطاعم
+│   ├── index.php      # صفحة الولاية مع المواقع، الفنادق، المطاعم
+│   ├── state_page.php      # صفحة الولاية مع المواقع، الفنادق، المطاعم
+│   ├── lesson.php          # صفحة الدروس التعليمية
+│   ├── archive.php         # صفحة الأرشيف التاريخي
+│   └── smart_trip.php      # صفحة اقتراح الرحلات الذكية (AI)
+│
+├── admin/                  # لوحة تحكم المسؤول
+│   ├── menu.php           # لوحة الإدارة الرئيسية
+│   ├── index.php           # لوحة الإدارة الرئيسية
+│   ├── manage_users.php
+│   ├── manage_states.php
+│   ├── manage_heritage.php
+│   ├── manage_lessons.php
+│   ├── manage_hotels.php
+│   ├── manage_restaurants.php
+│   └── manage_maps.php     # إدارة الخرائط التفاعلية
+
