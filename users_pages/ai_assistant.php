@@ -10,7 +10,7 @@ require_once '../config/db.php';
 Auth::requireLogin();
 
 // DeepSeek API Configuration
-define('DEEPSEEK_API_KEY', 'sk-a17db704b2ca46c38d317326d8de41e7'); // استبدل بمفتاح API الخاص بك
+define('DEEPSEEK_API_KEY', 'sk-a17db704b2ca46c38d317326d8000001e7'); // استبدل بمفتاح API الخاص بك
 define('DEEPSEEK_API_URL', 'https://api.deepseek.com/v1/chat/completions');
 ?>
 <!DOCTYPE html>
